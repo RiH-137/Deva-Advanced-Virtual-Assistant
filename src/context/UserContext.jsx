@@ -95,38 +95,59 @@ function takeCommand(command) {
       speakAndSet("Please tell me what to search");
     }
   }
-    // google search
-  else if(command.includes("open") && command.includes("google")){
-        window.open("https://www.google.com/","_blank")
-        speak("opening google")
-        setResponse(true)
-        setPrompt("opening google...")
-        setTimeout(()=>{
-            setSpeaking(false)
-           },5000)
+
+  // google search directly
+  else if (command.includes("open") && command.includes("google")) {
+    window.open("https://www.google.com/", "_blank");
+    speak("Opening Google");
+    setResponse(true);
+    setPrompt("Opening Google...");
+    setTimeout(() => {
+      setSpeaking(false);
+    }, 5000);
   }
 
-    // "open something" with fallback
+  // "open something" with fallback
   else if (command.includes("open")) {
-        const match = command.match(/open\s+(.+)/);
-        if (match && match[1]) {
-        const siteName = match[1].trim();
-        openSite(siteName);
-        } else {
-        speakAndSet("Please tell me which website to open");
-        }
+    const match = command.match(/open\s+(.+)/);
+    if (match && match[1]) {
+      const siteName = match[1].trim();
+      openSite(siteName);
+    } else {
+      speakAndSet("Please tell me which website to open");
+    }
   }
 
   // Get time
   else if (command.includes("time")) {
-    let time = new Date().toLocaleString(undefined, { hour: "numeric", minute: "numeric" });
+    let time = new Date().toLocaleString(undefined, {
+      hour: "numeric",
+      minute: "numeric",
+    });
     speakAndSet(`The time is ${time}`);
   }
 
   // Get date
   else if (command.includes("date")) {
-    let date = new Date().toLocaleString(undefined, { day: "numeric", month: "short" });
+    let date = new Date().toLocaleString(undefined, {
+      day: "numeric",
+      month: "short",
+    });
     speakAndSet(`Today's date is ${date}`);
+  }
+
+  // Ask for name or introduction
+  else if (/(your name|who are you|introduce yourself)/i.test(command)) {
+    speakAndSet("I am Diva, your AI assistant.");
+  }
+
+  // Ask who created or developed her
+  else if (
+    /(who (created|developed) you|who is your creator|your developer)/i.test(
+      command
+    )
+  ) {
+    speakAndSet("I was developed by Rishi.");
   }
 
   // Default: AI model response
@@ -134,6 +155,7 @@ function takeCommand(command) {
     aiResponse(command);
   }
 }
+
 
 
    let value={
