@@ -3,6 +3,10 @@ import run from '../gemini';
 export const datacontext=createContext()
 
 function UserContext({children}) {
+
+// useState is used to manage the state of the application
+// if speaking is true, then showing the text response
+// if false, then showing the mic button
 let [speaking,setSpeaking]=useState(false)
 let [prompt,setPrompt]=useState("listening...")
 let [response,setResponse]=useState(false)
@@ -15,9 +19,13 @@ text_speak.pitch=1;
 text_speak.lang="hi-GB"
 window.speechSynthesis.speak(text_speak)
     }
+
+// AI response
+// async because the run function coz it returns a promise after some time
 async function aiResponse(prompt){
     let text=await run(prompt)
-    let newText=text.split("**")&&text.split("*")&&text.replace("google","Ayush Sahu")&&text.replace("Google","Ayush Sahu")
+    // console.log(text)
+    let newText=text.split("**")&&text.split("*")&&text.replace("google","Rishi")&&text.replace("Google","Rishi")
     setPrompt(newText)
     speak(newText)
     setResponse(true)
@@ -35,9 +43,12 @@ let recognition=new speechRecognition()
 // recognition config
 recognition.onresult=(e)=>{ 
     // console.log(e)
-    // the spoken text is in e.results[0].transcript, so we have to return the 0th index of the results
+    // the spoken text is in e.results[0][0].transcript, so we have to return the 0th index of the results
 let currentIndex=e.resultIndex
 let transcript=e.results[currentIndex][0].transcript
+    // console.log(transcript)
+
+// set the prompt to the spoken text
 setPrompt(transcript)
 takeCommand(transcript.toLowerCase())
 }
@@ -84,16 +95,26 @@ function takeCommand(command) {
       speakAndSet("Please tell me what to search");
     }
   }
+    // google search
+  else if(command.includes("open") && command.includes("google")){
+        window.open("https://www.google.com/","_blank")
+        speak("opening google")
+        setResponse(true)
+        setPrompt("opening google...")
+        setTimeout(()=>{
+            setSpeaking(false)
+           },5000)
+  }
 
-  // "open something" with fallback
+    // "open something" with fallback
   else if (command.includes("open")) {
-    const match = command.match(/open\s+(.+)/);
-    if (match && match[1]) {
-      const siteName = match[1].trim();
-      openSite(siteName);
-    } else {
-      speakAndSet("Please tell me which website to open");
-    }
+        const match = command.match(/open\s+(.+)/);
+        if (match && match[1]) {
+        const siteName = match[1].trim();
+        openSite(siteName);
+        } else {
+        speakAndSet("Please tell me which website to open");
+        }
   }
 
   // Get time
