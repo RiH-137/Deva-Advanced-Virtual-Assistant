@@ -1,35 +1,34 @@
-require('dotenv').config();  // Load the .env file
-
-let apiKey= process.env.GEMINI_API_KEY;
-
 import {
-    GoogleGenerativeAI, HarmCategory, HarmBlockThreshold, 
-} from '@google/generative-ai';
+  GoogleGenerativeAI,
+  HarmCategory,
+  HarmBlockThreshold,
+} from "@google/generative-ai";
 
-const genAI= new GoogleGenerativeAI(apiKey);
-const model= genAI.getGenerativeModel({
-    model:"gemini-1.5-flash",
+// ✅ Use Vite-style environment variable
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
+const genAI = new GoogleGenerativeAI(apiKey);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash-8b",
 });
 
-const generationConfig= {
-    temperature:1,
-    maxOutputTokens: 8192,
-    topK: 40,
-    topP: 0.95,
-    responseMimeType: "text/plain",
+const generationConfig = {
+  temperature: 1,
+  topP: 0.95,
+  topK: 40,
+  maxOutputTokens: 20,
+  responseMimeType: "text/plain",
 };
 
-async function run( prompt ) {
-    const chatSession= model.startChat({
-        generationConfig,
-        history: [
+async function run(prompt) {
+  const chatSession = model.startChat({
+    generationConfig,
+    history: [],
+  });
 
-        ],
-    });
-
-    const result = await chatSession.sendMessage(prompt);
-    console.log(result.response.text());
-
+  const result = await chatSession.sendMessage(prompt);
+  return result.response.text();
 }
 
-export default run();
+export default run;

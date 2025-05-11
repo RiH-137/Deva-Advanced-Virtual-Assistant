@@ -1,135 +1,107 @@
-.main{
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;   
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 9px;
-    gap: 20px;
+.main {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+  background: black;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#deva {
-    height: 70%;
-    border-radius: 15px;
-    -webkit-mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
-    mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+/* Regular image (no glow) */
+#deva, #shifra {
+  height: 70%;
 }
 
-
-
-
+/* Glowing animated text */
 span {
-    display: inline-block;
-    font-size: 2vmax;
-    font-weight: 600;
-    background: linear-gradient(120deg, #22dde7, #ed047d);
-    background-size: 200% auto;
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-    animation: fadeIn 1s ease forwards, shimmer 6s ease-in-out infinite;
-    opacity: 0;
-    transition: text-shadow 0.3s ease, transform 0.3s ease;
+  font-size: 2vmax;
+  background: linear-gradient(90deg, #22dde7, #ed047d, #22dde7);
+  background-size: 300% 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradientMove 3s ease infinite;
+  text-shadow: 0 0 10px rgba(237, 4, 125, 0.5);
 }
 
-span:hover {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* Fade in on load */
+/* Animated glowing button */
+button {
+  width: 200px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(145deg, #4fe0ea, #3bbfda);
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(79, 224, 234, 0.6), 0 0 30px rgba(79, 224, 234, 0.4);
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(79, 224, 234, 0.6), 0 0 30px rgba(79, 224, 234, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(79, 224, 234, 1), 0 0 50px rgba(79, 224, 234, 0.7);
+    transform: scale(1.05);
+  }
+}
+
+button:hover {
+  transform: scale(1.1);
+  background: linear-gradient(145deg, #3bbfda, #4fe0ea);
+}
+
+/* Response section fade-in */
+.response {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
 @keyframes fadeIn {
-    to {
-        opacity: 1;
-    }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Smooth shimmer across the text */
-@keyframes shimmer {
-    0% {
-        background-position: 0% center;
-    }
-    50% {
-        background-position: 100% center;
-    }
-    100% {
-        background-position: 0% center;
-    }
+/* Simple gif (no glow) */
+#aigif {
+  width: 50vh;
+  height: 100px;
 }
 
-
-
-
-
-#btn {
-    position: relative;
-    padding: 14px 32px;
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #fff;
-    background: linear-gradient(135deg, #00feba, #5b5bff);
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    overflow: hidden;
-    z-index: 1;
-    transition: all 0.4s ease;
-    box-shadow:
-        0 0 10px #5b5bff,
-        0 0 20px #00feba,
-        0 0 30px rgba(0, 254, 186, 0.5),
-        0 0 40px rgba(91, 91, 255, 0.5);
-    animation: float 3s ease-in-out infinite;
+/* Speech gif (also no glow now) */
+#speak {
+  width: 100px;
 }
 
-#btn::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(from 0deg, #00feba, #5b5bff, #00feba);
-    animation: rotateBG 6s linear infinite;
-    z-index: -1;
-    filter: blur(30px);
+/* Prompt text */
+p {
+  font-size: 1.3vmax;
+  color: #ffffff;
+  text-align: center;
+  padding: 0px 40px;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
 }
-
-#btn:hover {
-    transform: scale(1.08);
-    background: linear-gradient(135deg, #5b5bff, #00feba);
-    box-shadow:
-        0 0 20px #5b5bff,
-        0 0 40px #00feba,
-        0 0 60px rgba(0, 254, 186, 0.7),
-        0 0 80px rgba(91, 91, 255, 0.7);
-}
-
-#btn:active {
-    transform: scale(0.95);
-    box-shadow:
-        0 0 10px #00feba,
-        0 0 25px #0909ba;
-}
-
-@keyframes rotateBG {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-5px);
-    }
-}
-
