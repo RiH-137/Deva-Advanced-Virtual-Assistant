@@ -64,6 +64,10 @@ In simple words, **Diva is the AI who can talk with you**.
 - “Tell me a joke”
 
 ---
+.env
+```
+VITE_GEMINI_API_KEY= Your API KEY
+```
 
 ## 📸 Screenshots
 
